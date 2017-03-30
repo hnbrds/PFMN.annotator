@@ -1,0 +1,8 @@
+#vid {
+  padding : 0px;
+  margin : 0px;
+}
+
+.container{
+  position:relative; /*<---add this*/
+}
