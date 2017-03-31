@@ -3,6 +3,27 @@
   margin : 0px;
 }
 
+#log {
+  margin-top : 50px;
+}
+
 .container{
   position:relative; /*<---add this*/
+}
+/*
+.video-js {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+}
+*/
+
+#draw {
+  position : absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
 }

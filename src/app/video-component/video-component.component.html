@@ -1,13 +1,30 @@
-<p>
-  <!-- Simple video example -->
-  <video #vid class="video-js container" vjs-video id = "vid"
-  (mousemove)="onMouseClick($event)"
-  (mouseUp)="onMouseUp($event)" controls>
-    <source src="src/videos/NORWAY.mp4" type="video/mp4">
-    Your browser does not support the video tag.
+<div class="containter">
+  <canvas id='draw' (mousemove)="onMouse($event)"></canvas>
+  <video #vid class="col-12" id = "vid"
+    (mousemove)="onMouse($event)"
+    (click)="onMouse($event)"
+    preload='auto' autoplay controls loop>
+      <source src="src/videos/NORWAY.mp4" type="video/mp4">
+      Your browser does not support the video tag.
   </video>
-</p>
-<p>
-  Mouse log
-  ({{pixelX}},{{pixelY}})
-</p>
+</div>
+
+<div class = 'container' id='log'>
+  <div class = 'row'>
+    <div class = 'col-6'>
+      <ul><h3>Frame : {{framecount}}</h3></ul>
+      <ul><h3>Mouse : ({{pixelX}},{{pixelY}})</h3></ul>
+      <ul><h3>HighLight Coordinates</h3>
+        <div id='coord'>
+          <ul *ngFor= "let coords of this.highLights; let i = index;">
+            <h4>{{i+1}} : {{coords}}</h4>
+          </ul>
+        </div>
+      </ul>
+    </div>
+    <div class = 'col-6'>
+      <h3>Frame</h3>
+      <h3>Captured</h3>
+    </div>
+  </div>
+</div>
