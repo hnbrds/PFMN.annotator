@@ -1,0 +1,39 @@
+<div class="containter">
+  <canvas id='draw'></canvas>
+  <video class="col-12" id = "vid"
+    (mousemove)="onMouse($event)"
+    (click)="onMouse($event)"
+    preload='auto' autoplay controls loop>
+      <source src="/assets/NORWAY.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+  </video>
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                id="vid-overlay" width="480px" height="270px">
+    <defs>
+      <mask id="mask1" maskUnits="objectBoundingBox"
+              maskContentUnits="objectBoundingBox">
+          <circle cx="0.25" cy="0.25" r="0.5" fill="white" />
+      </mask>
+    </defs>
+  </svg>
+</div>
+
+<div class = 'container' id='log'>
+  <div class = 'row'>
+    <div class = 'col-6'>
+      <ul><h3>Frame : {{framecount}}</h3></ul>
+      <ul><h3>Mouse : ({{pixelX}},{{pixelY}})</h3></ul>
+      <ul><h3>HighLight Coordinates</h3>
+        <div id='coord'>
+          <ul *ngFor= "let coords of this.highLights; let i = index;">
+            <h4>{{i+1}} : {{coords}}</h4>
+          </ul>
+        </div>
+      </ul>
+    </div>
+    <div class = 'col-6'>
+      <h3>Frame</h3>
+      <h3>Captured</h3>
+    </div>
+  </div>
+</div>

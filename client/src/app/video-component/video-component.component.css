@@ -1,0 +1,34 @@
+#vid {
+  padding : 0px;
+  margin : 0px;
+  mask : url("#vid");
+  z-index : 1 !important;
+}
+
+#log {
+  margin-top : 50px;
+}
+
+#vid-overlay {
+  position : absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index : 2 !important!
+}
+
+#draw {
+  position : absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+.container{
+  position:relative; /*<---add this*/
+}
