@@ -38,6 +38,7 @@ testem.log
 /e2e/*.map
 
 # Videos
+/videos/
 *.mp4
 
 # System Files

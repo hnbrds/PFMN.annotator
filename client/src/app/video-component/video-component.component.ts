@@ -1,18 +1,26 @@
 import { Component, ElementRef, Renderer2, EventEmitter, OnInit, AfterViewInit, ViewChild} from '@angular/core';
 import { Observable } from 'rxjs/Rx'
+import { HttpService } from '../services/http-service/http.service'
 import * as videojs from 'video.js'
+
 
 @Component({
   selector: 'video-component',
   templateUrl: './video-component.component.html',
   styleUrls: ['./video-component.component.css']
 })
+
 export class VideoComponentComponent implements OnInit, AfterViewInit{
+  // server
+  private url : string = "http://localhost:17358/"
+  videolist : string[] = []
+
   // video property
   //@ViewChild('vid') video : ElementRef
   private video : any
   private videoWidth : number = 0
   private videoHeight : number = 0
+  videoId : string = 'video.mp4'
   // Mouse coords
   highLights : any[] = []
   private coordSequence : any[] = []
@@ -29,7 +37,8 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   private context : any
 
 
-  constructor(private elementRef: ElementRef, private rd : Renderer2) {
+  constructor(private elementRef: ElementRef,
+    private rd : Renderer2, private httpService : HttpService ) {
   }
 
   ngOnInit() {
@@ -50,12 +59,6 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
 
     console.log(document.getElementById('draw'));
     console.log(this.context);
-    /*
-    this.video.nativeElement.addEventListener('play', function() {
-      if(this.video.nativeElement.paused || this.video.nativeElement.ended)
-        return false;
-      this.canvas.drawImage(3, 0, 0, 5, 1);
-    }, false);*/
   }
 
   getVideoProperty() {
@@ -66,10 +69,11 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   updateFrameCount(t : number) {
     var tmp = Math.floor(this.video.currentTime * this.fps);
     if(this.framecount != tmp){
-      if(this.framecount != tmp+1) {
-        this.framecount = tmp;
-      }
-      this.coordSequence.push([tmp, this.pixelX, this.pixelY]);
+      this.framecount = tmp;
+      this.coordSequence.push({
+        frame : this.framecount,
+        coord : [this.pixelX, this.pixelY]
+      });
     }
   }
 
@@ -99,5 +103,39 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
       this.highLights.push([this.pixelX, this.pixelY]);
       this.context.rect(event.offsetX-10, event.offsetX-10, 20, 20);
     }
+  }
+
+  makeData() {
+      return {
+        vid : this.videoId,
+        log : this.coordSequence,
+        hl : this.highLights
+      }
+  }
+
+  saveLog() {
+    this.httpService.postJson('log/save', this.makeData())
+    .subscribe(
+      data => {
+        console.log('data', data);
+      },
+      error => {
+        console.log('error');
+      }
+    );
+    this.coordSequence = [];
+    this.highLights = [];
+  }
+
+  viewLog() {
+    console.log(this.coordSequence);
+  }
+
+  getList() {
+    this.httpService.getJson('videos/list').subscribe(
+      data => {
+        console.log('data', data);
+      }
+    )
   }
 }

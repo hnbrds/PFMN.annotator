@@ -8,6 +8,8 @@ import { VideoComponentComponent } from './video-component/video-component.compo
 import { FooterComponent } from './footer/footer.component';
 import { TitleComponent } from './title/title.component';
 
+import { HttpService } from './services/http-service/http.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,7 @@ import { TitleComponent } from './title/title.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ HttpService ],
+  bootstrap: [ AppComponent]
 })
 export class AppModule { }

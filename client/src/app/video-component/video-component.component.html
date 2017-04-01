@@ -1,10 +1,10 @@
-<div class="containter">
+<div class="containter border-0">
   <canvas id='draw'></canvas>
   <video class="col-12" id = "vid"
     (mousemove)="onMouse($event)"
     (click)="onMouse($event)"
     preload='auto' autoplay controls loop>
-      <source src="/videos/video.mp4" type="video/mp4">
+      <source src="/videos/{{videoId}}" type="video/mp4">
       Your browser does not support the video tag.
   </video>
   <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
@@ -16,6 +16,20 @@
       </mask>
     </defs>
   </svg>
+</div>
+
+<div class="container" id='btn'>
+  <div class= "d-flex justify-content-end">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-primary"
+      (click)='saveLog()'>Save</button>
+
+      <button type="button" class="btn btn-info">View log</button>
+
+      <button type="button" class="btn btn-secondary"
+      (click)="getList()">Video list</button>
+    </div>
+  </div>
 </div>
 
 <div class = 'container' id='log'>
