@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var serveIndex = require('serve-index');
 
 var video = require('./routes/video');
 var log = require('./routes/log');
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use('/', express.static(path.join(__dirname, '../client/dist')));
 app.use('/videos', video);
 app.use('/log', log);
+app.use('/list', serveIndex('public', {'icons': true}));
 //app.use('/videos', express.static(path.join(__dirname, 'public/videos')));
 
 // catch 404 and forward to error handler

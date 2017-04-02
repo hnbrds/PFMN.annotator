@@ -25,14 +25,12 @@
 }
 
 #btn {
-  margin-top : 2%;
+  margin-top : 2em;
 }
 
 #log {
   margin-top : 50px;
 }
-
-
 
 .container{
   position:relative; /*<---add this*/

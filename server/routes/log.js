@@ -7,10 +7,10 @@ router.post('/save', function(req, res, next) {
 
   writeLog(req.body, function(err) {
     if(err) {
-      res.status(500).send('Not saved');
+      res.status(500).send({msg : 'Not saved'});
       return;
     }
-    res.send("Data saved");
+    res.send({ msg : "Data saved"});
   });
 });
 

@@ -118,6 +118,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
     .subscribe(
       data => {
         console.log('data', data);
+        console.log(document.getElementById('success'));
       },
       error => {
         console.log('error');
@@ -132,7 +133,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   }
 
   getList() {
-    this.httpService.getJson('videos/list').subscribe(
+    this.httpService.getJson('list').subscribe(
       data => {
         console.log('data', data);
       }
