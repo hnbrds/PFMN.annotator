@@ -1,5 +1,2 @@
-# static files
-*.mp4
-
 # dependencies
 /node_modules
