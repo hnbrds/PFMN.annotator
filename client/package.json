@@ -23,6 +23,7 @@
     "@types/videojs": "^5.16.2",
     "core-js": "^2.4.1",
     "grunt": "^0.4.5",
+    "ng2-bootstrap": "^1.6.1",
     "rxjs": "^5.1.0",
     "typescript": "^2.2.2",
     "video.js": "^5.19.0",

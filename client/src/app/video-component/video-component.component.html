@@ -3,8 +3,8 @@
   <video class="col-12" id = "vid"
     (mousemove)="onMouse($event)"
     (click)="onMouse($event)"
-    preload='auto' autoplay controls>
-      <source src="/videos/{{videoId}}" type="video/mp4">
+    preload='auto' controls>
+      <source src="videos/{{vidCategory}}/{{videoId}}" type="video/mp4">
       Your browser does not support the video tag.
   </video>
   <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
@@ -19,14 +19,29 @@
 </div>
 
 <div class="container" id='btn'>
+
   <div class= "d-flex justify-content-end">
+    <div class="dropdown">
+      <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{vidCategory}}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" (click)="chooseCategory($event)">360MV</a>
+        <a class="dropdown-item" (click)="chooseCategory($event)">360wedding</a>
+        <a class="dropdown-item" (click)="chooseCategory($event)">360surfing</a>
+        <a class="dropdown-item" (click)="chooseCategory($event)">360biking</a>
+      </div>
+    </div>
     <div class="btn-group" role="group" aria-label="Basic example">
+
       <button type="button" class="btn btn-info"
       (click)="getList()">Video list</button>
-      <button type="button" class="btn btn-success"
+
+      <button type="button" class="btn btn-primary"
       (click)='saveLog()'>Save</button>
     </div>
   </div>
+
 </div>
 
 <div class = 'container' id='log'>
@@ -34,17 +49,20 @@
     <div class = 'col-6'>
       <ul><h3>Frame : {{framecount}}</h3></ul>
       <ul><h3>Mouse : ({{pixelX}},{{pixelY}})</h3></ul>
-      <ul><h3>HighLight Coordinates</h3>
+      <!-- phi, theta -->
+      <ul><h3>HighLights</h3>
         <div id='coord'>
-          <ul *ngFor= "let coords of this.highLights; let i = index;">
-            <h4>{{i+1}} : {{coords}}</h4>
+          <ul *ngFor= "let highlight of this.highLights">
+            <h4>{{highlight.frame}} : [{{highlight.coord[0]}}, {{highlight.coord[1]}}]</h4>
           </ul>
         </div>
       </ul>
     </div>
     <div class = 'col-6'>
-      <h3>Frame</h3>
-      <h3>Captured</h3>
+      <h3>Video Lists</h3>
+      <ul *ngFor = "let vid of this.videolist; let i = index;">
+        <a href='javascript:void(0)' (click)="setVid($event)">{{vid}}</a>
+      </ul>
     </div>
   </div>
 </div>

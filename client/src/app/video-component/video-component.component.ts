@@ -3,11 +3,13 @@ import { Observable } from 'rxjs/Rx'
 import { HttpService } from '../services/http-service/http.service'
 import * as videojs from 'video.js'
 
-
 @Component({
   selector: 'video-component',
   templateUrl: './video-component.component.html',
-  styleUrls: ['./video-component.component.css']
+  styleUrls: ['./video-component.component.css'],
+  host: {
+  '(document:keydown)': 'onKeydown($event)'
+  }
 })
 
 export class VideoComponentComponent implements OnInit, AfterViewInit{
@@ -21,6 +23,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   private videoWidth : number = 0
   private videoHeight : number = 0
   videoId : string = 'video.mp4'
+  vidCategory : string = 'Select Category'
   // Mouse coords
   highLights : any[] = []
   private coordSequence : any[] = []
@@ -30,7 +33,6 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   private startframe : number = 0
   framecount : number = 0
   private fps : number = 30
-
   // canvas property
   //@ViewChild("draw") canvas : ElementRef
   private canvas : any
@@ -100,7 +102,10 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
     if(event.type == "click") {
       console.log(event);
       console.log(this.video);
-      this.highLights.push([this.pixelX, this.pixelY]);
+      this.highLights.push({
+        frame : this.framecount,
+        coord : [this.pixelX, this.pixelY]
+      });
       this.context.rect(event.offsetX-10, event.offsetX-10, 20, 20);
     }
   }
@@ -111,6 +116,10 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
         log : this.coordSequence,
         hl : this.highLights
       }
+  }
+
+  chooseCategory(event) {
+    this.vidCategory = event.target.innerText;
   }
 
   saveLog() {
@@ -128,15 +137,27 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
     this.highLights = [];
   }
 
-  viewLog() {
-    console.log(this.coordSequence);
-  }
-
   getList() {
-    this.httpService.getJson('list').subscribe(
+    this.httpService.getJson('videos/list/'+this.vidCategory).subscribe(
       data => {
         console.log('data', data);
+        this.videolist = data;
       }
     )
+  }
+
+  setVid(event) {
+    this.videoId = event.target.innerText;
+    this.video.load();
+  }
+
+  onKeydown(event){
+    if(event.key == " ") {
+      event.preventDefault();
+      if(this.video.paused)
+        this.video.play();
+      else
+        this.video.pause();
+    }
   }
 }
