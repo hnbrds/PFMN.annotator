@@ -169,5 +169,9 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
       else
         this.video.pause();
     }
+    if(event.key == "Enter") {
+      event.preventDefault();
+      this.saveLog();
+    }
   }
 }
