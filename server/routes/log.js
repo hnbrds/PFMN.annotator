@@ -4,7 +4,6 @@ var fs = require('fs');
 var router = express.Router();
 
 router.post('/save', function(req, res, next) {
-
   writeLog(req.body, function(err) {
     if(err) {
       res.status(500).send({msg : 'Not saved'});
@@ -17,8 +16,14 @@ router.post('/save', function(req, res, next) {
 function writeLog(data, callback) {
   console.log('Saving data to ' + __dirname+'/../../log/log.json');
   console.log(data.vid);
-  //fs.writeFile(path.join(__dirname+'/../../../log/'+data.vid+'.json'), JSON.stringify(data), callback);
-  fs.appendFile(path.join(__dirname+'/../../../log/'+data.vid+'.json'), JSON.stringify(data)+'\n', {
+  console.log(data.cat);
+  var dir = path.join(__dirname, '/../../../log/'+ data.cat);
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync((dir), {
+      mode : 0o777
+    });
+  }
+  fs.appendFile(path.join(dir +'/' +data.vid+'.json'), JSON.stringify(data)+'\n', {
     mode : 0o777
   }, callback);
 }

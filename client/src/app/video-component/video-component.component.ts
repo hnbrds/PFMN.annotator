@@ -116,8 +116,10 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   }
 
   makeData() {
+      console.log(this.vidCategory);
       return {
         vid : this.videoId.slice(0, -4),
+        cat : this.vidCategory,
         log : this.coordSequence,
         hl : this.highLights
       }
