@@ -141,9 +141,11 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
       data => {
         console.log('data', data);
         console.log(document.getElementById('success'));
+        alert("SAVED");
       },
       error => {
         console.log('error');
+        alert("ERROR");
       }
     );
     this.coordSequence = [];
