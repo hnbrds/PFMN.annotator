@@ -3,3 +3,4 @@
 
 # static files
 /public/videos/*
+*.mp4

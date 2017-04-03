@@ -29,6 +29,8 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   private coordSequence : any[] = []
   pixelX : number = 0
   pixelY : number = 0
+  longitude : number = 0
+  latitude : number = 0
   // Frame counter
   private startframe : number = 0
   framecount : number = 0
@@ -74,7 +76,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
       this.framecount = tmp;
       this.coordSequence.push({
         frame : this.framecount,
-        coord : [this.pixelX, this.pixelY]
+        coord : [this.longitude, this.latitude]
       });
     }
   }
@@ -93,10 +95,13 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
     var clientHeight = this.video.clientHeight;
     var scaleX = videoWidth / clientWidth;
     var scaleY = videoHeight / clientHeight;
-
     let pos = this.cutOff(event.offsetX, event.offsetY, clientWidth, clientHeight);
     this.pixelX = (pos.posX * scaleX) + 0.5 | 0;
     this.pixelY = (pos.posY * scaleY) + 0.5 | 0;
+
+    this.latitude = Math.round(((this.pixelY / (this.video.videoHeight / 180) - 90) / -1) * 10 )/10;
+    this.longitude = Math.round((this.pixelX / (this.video.videoWidth / 360) - 180) * 10) / 10;
+
     if(event.type == "mousemove"){
     }
     if(event.type == "click") {
@@ -104,7 +109,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
       console.log(this.video);
       this.highLights.push({
         frame : this.framecount,
-        coord : [this.pixelX, this.pixelY]
+        coord : [this.longitude, this.latitude]
       });
       this.context.rect(event.offsetX-10, event.offsetX-10, 20, 20);
     }
@@ -112,7 +117,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
 
   makeData() {
       return {
-        vid : this.videoId,
+        vid : this.videoId.slice(0, -4),
         log : this.coordSequence,
         hl : this.highLights
       }
@@ -120,6 +125,12 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
 
   chooseCategory(event) {
     this.vidCategory = event.target.innerText;
+    this.httpService.getJson('videos/list/'+this.vidCategory).subscribe(
+      data => {
+        console.log('data', data);
+        this.videolist = data;
+      }
+    )
   }
 
   saveLog() {
@@ -137,17 +148,12 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
     this.highLights = [];
   }
 
-  getList() {
-    this.httpService.getJson('videos/list/'+this.vidCategory).subscribe(
-      data => {
-        console.log('data', data);
-        this.videolist = data;
-      }
-    )
-  }
-
   setVid(event) {
-    this.videoId = event.target.innerText;
+    var vid = event.target.innerText.split(':')[1];
+    vid = vid.slice(1, vid.length);
+    this.videoId = vid;
+    this.coordSequence = [];
+    this.highLights = [];
     this.video.load();
   }
 

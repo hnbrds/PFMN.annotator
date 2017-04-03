@@ -32,6 +32,10 @@
   margin-top : 50px;
 }
 
+#vidlist {
+  margin-top : 1em;
+}
+
 .container{
   position:relative; /*<---add this*/
 }
