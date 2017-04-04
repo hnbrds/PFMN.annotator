@@ -23,7 +23,10 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   private videoWidth : number = 0
   private videoHeight : number = 0
   videoId : string = 'video.mp4'
+  videoTitle : string = ''
   vidCategory : string = 'Select Category'
+  //mousestatus
+  mousedown : boolean = false
   // Mouse coords
   highLights : any[] = []
   private coordSequence : any[] = []
@@ -78,6 +81,12 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
         frame : this.framecount,
         coord : [this.longitude, this.latitude]
       });
+      if(this.mousedown) {
+        this.highLights.push({
+          frame : this.framecount,
+          coord : [this.longitude, this.latitude]
+        });
+      }
     }
   }
 
@@ -112,6 +121,14 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
         coord : [this.longitude, this.latitude]
       });
       this.context.rect(event.offsetX-10, event.offsetX-10, 20, 20);
+    }
+
+    if(event.type == "mousedown") {
+      this.mousedown = true;
+    }
+
+    if(event.type == "mouseup") {
+      this.mousedown = false;
     }
   }
 
@@ -155,6 +172,8 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   setVid(event) {
     var vid = event.target.innerText.split(':')[1];
     vid = vid.slice(1, vid.length);
+
+    this.videoTitle = event.target.innerText;
     this.videoId = vid;
     this.coordSequence = [];
     this.highLights = [];
@@ -162,6 +181,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   }
 
   onKeydown(event){
+    console.log(event);
     if(event.key == " ") {
       event.preventDefault();
       if(this.video.paused)
@@ -169,9 +189,17 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
       else
         this.video.pause();
     }
-    if(event.key == "Enter") {
+    if(event.key == 'Enter') {
       event.preventDefault();
       this.saveLog();
+    }
+  }
+
+  reloadVid() {
+    if(confirm("Reload video? All data will be rest.")){
+      this.coordSequence = [];
+      this.highLights = [];
+      this.video.load();
     }
   }
 }

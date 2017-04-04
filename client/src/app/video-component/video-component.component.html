@@ -2,7 +2,8 @@
   <canvas id='draw'></canvas>
   <video class="col-12" id = "vid"
     (mousemove)="onMouse($event)"
-    (click)="onMouse($event)"
+    (mousedown)="onMouse($event)"
+    (mouseup) = "onMouse($event)"
     preload='auto' controls>
       <source src="videos/{{vidCategory}}/{{videoId}}" type="video/mp4">
       Your browser does not support the video tag.
@@ -19,8 +20,12 @@
 </div>
 
 <div class="container" id='btn'>
-
+  <div class ="row">
+    <strong *ngIf="mousedown; else notdown" class="col-3">RECORDING HL</strong>
+    <ng-template #notdown>......</ng-template>
+  </div>
   <div class= "d-flex justify-content-end">
+    <strong class="col-3">{{videoTitle}}</strong>
     <div class="dropdown">
       <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         {{vidCategory}}
@@ -35,6 +40,8 @@
     <div class="btn-group" role="group" aria-label="Basic example">
       <button type="button" class="btn btn-primary"
       (click)='saveLog()'>Save</button>
+      <button type="button" class="btn btn-danger"
+      (click)='reloadVid()'>Reload Video</button>
     </div>
   </div>
 
