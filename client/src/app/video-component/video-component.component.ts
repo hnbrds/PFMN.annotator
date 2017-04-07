@@ -155,7 +155,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
 
   saveLog() {
     var name = prompt("Input your name")
-    if(name != ''){
+    if((name != '') && (name != null)){
       this.httpService.postJson('log/save', this.makeData(name))
       .subscribe(
         data => {
@@ -172,7 +172,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
       this.highLights = [];
     }
     else {
-      alert("ERROR")
+      alert("ERROR: Check your name")
     }
   }
 
