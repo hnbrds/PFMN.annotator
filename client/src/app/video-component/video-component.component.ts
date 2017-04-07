@@ -132,10 +132,11 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
     }
   }
 
-  makeData() {
+  makeData(name) {
       console.log(this.vidCategory);
       return {
         vid : this.videoId.slice(0, -4),
+        name : name,
         cat : this.vidCategory,
         log : this.coordSequence,
         hl : this.highLights
@@ -153,20 +154,26 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   }
 
   saveLog() {
-    this.httpService.postJson('log/save', this.makeData())
-    .subscribe(
-      data => {
-        console.log('data', data);
-        console.log(document.getElementById('success'));
-        alert("SAVED");
-      },
-      error => {
-        console.log('error');
-        alert("ERROR");
-      }
-    );
-    this.coordSequence = [];
-    this.highLights = [];
+    var name = prompt("Input your name")
+    if(name != ''){
+      this.httpService.postJson('log/save', this.makeData(name))
+      .subscribe(
+        data => {
+          console.log('data', data);
+          console.log(document.getElementById('success'));
+          alert("SAVED");
+        },
+        error => {
+          console.log('error');
+          alert("ERROR");
+        }
+      );
+      this.coordSequence = [];
+      this.highLights = [];
+    }
+    else {
+      alert("ERROR")
+    }
   }
 
   setVid(event) {
