@@ -39,6 +39,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   private startframe : number = 0
   framecount : number = 0
   private fps : number = 30
+  interval : number = 1
   // canvas property
   //@ViewChild("draw") canvas : ElementRef
   private canvas : any
@@ -83,16 +84,18 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   updateFrameCount(t : number) {
     var tmp = Math.floor(this.video.currentTime * this.fps);
     if(this.framecount != tmp){
-      this.framecount = tmp;
-      this.coordSequence.push({
-        frame : this.framecount,
-        coord : [this.longitude, this.latitude]
-      });
-      if(this.mousedown) {
-        this.highLights.push({
+        if(tmp - this.framecount >= this.interval){
+        this.framecount = tmp;
+        this.coordSequence.push({
           frame : this.framecount,
           coord : [this.longitude, this.latitude]
         });
+        if(this.mousedown) {
+          this.highLights.push({
+            frame : this.framecount,
+            coord : [this.longitude, this.latitude]
+          });
+        }
       }
     }
   }
@@ -133,7 +136,6 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
     if(event.type == "mousedown") {
       this.mousedown = true;
     }
-
     if(event.type == "mouseup") {
       this.mousedown = false;
     }

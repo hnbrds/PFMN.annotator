@@ -33,9 +33,30 @@
 }
 
 #vidlist {
-  margin-top : 1em;
+  margin-bottom: 1em;
+}
+
+#catselector {
+  margin-right : 1em;
+}
+
+.col-form-label {
+  margin-right : 1em;
+}
+
+#recording {
+  margin-left : 1em;
+  padding-top : .4em;
+}
+
+#vidtitle {
+  margin-right : .7em;
+  padding-top : .5em
 }
 
 .container{
   position:relative; /*<---add this*/
+}
+.col-3 {
+  text-align: right;
 }

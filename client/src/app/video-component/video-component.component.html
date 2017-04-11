@@ -21,12 +21,18 @@
 
 <div class="container" id='btn'>
   <div class ="row">
-    <strong *ngIf="mousedown; else notdown" class="col-3">RECORDING HL</strong>
-    <ng-template #notdown>......</ng-template>
+    <div class="form-inline">
+      <label for="example-number-input" class="col-form-label">Log Interval</label>
+      <input class="form-control" type="number" [(ngModel)]=this.interval id="example-number-input">
+    </div>
+    <div class = "col-4" id='recording'>
+      <strong *ngIf="mousedown; else notdown">RECORDING HL</strong>
+      <ng-template #notdown>......</ng-template>
+    </div>
   </div>
   <div class= "d-flex justify-content-end">
-    <strong class="col-3">{{videoTitle}}</strong>
-    <div class="dropdown">
+    <strong class="col-3" id='vidtitle'>{{videoTitle}}</strong>
+    <div class="dropdown" id='catselector'>
       <a class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         {{vidCategory}}
       </a>
@@ -34,10 +40,6 @@
         <div *ngFor="let cat of this.vidCatList">
           <a class="dropdown-item" (click)="chooseCategory($event)">{{cat}}</a>
         </div>
-        <!--
-        <a class="dropdown-item" (click)="chooseCategory($event)">360wedding</a>
-        <a class="dropdown-item" (click)="chooseCategory($event)">360surfing</a>
-        <a class="dropdown-item" (click)="chooseCategory($event)">360biking</a>-->
       </div>
     </div>
     <div class="btn-group" role="group" aria-label="Basic example">
@@ -66,9 +68,9 @@
       </ul>
     </div>
     <div class = 'col-6'>
-      <h3>Video Lists</h3>
+      <h3 id='vidlist'>Video Lists</h3>
       <ul *ngFor = "let vid of this.videolist; let i = index;">
-        <a id='vidlist' href='#'
+        <a href='#'
         (click)="setVid($event)">{{i+1}} : {{vid}}</a>
       </ul>
     </div>
