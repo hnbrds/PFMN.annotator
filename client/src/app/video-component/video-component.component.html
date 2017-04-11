@@ -31,10 +31,13 @@
         {{vidCategory}}
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" (click)="chooseCategory($event)">360MV</a>
+        <div *ngFor="let cat of this.vidCatList">
+          <a class="dropdown-item" (click)="chooseCategory($event)">{{cat}}</a>
+        </div>
+        <!--
         <a class="dropdown-item" (click)="chooseCategory($event)">360wedding</a>
         <a class="dropdown-item" (click)="chooseCategory($event)">360surfing</a>
-        <a class="dropdown-item" (click)="chooseCategory($event)">360biking</a>
+        <a class="dropdown-item" (click)="chooseCategory($event)">360biking</a>-->
       </div>
     </div>
     <div class="btn-group" role="group" aria-label="Basic example">

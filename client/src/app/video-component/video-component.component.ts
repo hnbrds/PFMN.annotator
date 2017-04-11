@@ -25,6 +25,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   videoId : string = 'video.mp4'
   videoTitle : string = ''
   vidCategory : string = 'Select Category'
+  vidCatList : string[] = []
   //mousestatus
   mousedown : boolean = false
   // Mouse coords
@@ -58,6 +59,12 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   ngAfterViewInit() {
     this.canvasInit();
     this.video = document.getElementById('vid');
+    this.httpService.getJson('videos/list/').subscribe(
+      data => {
+        console.log('data', data);
+        this.vidCatList = data;
+      }
+    )
   }
 
   canvasInit() {
