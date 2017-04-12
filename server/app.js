@@ -27,8 +27,6 @@ app.use(cookieParser());
 app.use('/', express.static(path.join(__dirname, '../client/dist')));
 app.use('/videos', video);
 app.use('/log', log);
-//app.use('/list', serveIndex(path.join(__dirname, 'public/videos'), {'icons': false}));
-//app.use('/videos', express.static(path.join(__dirname, 'public/videos')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

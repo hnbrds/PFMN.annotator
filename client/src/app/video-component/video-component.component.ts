@@ -38,7 +38,7 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   // Frame counter
   private startframe : number = 0
   framecount : number = 0
-  private fps : number = 30
+  fps : number = 30
   interval : number = 1
   // canvas property
   //@ViewChild("draw") canvas : ElementRef
@@ -84,19 +84,20 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
   updateFrameCount(t : number) {
     var tmp = Math.floor(this.video.currentTime * this.fps);
     if(this.framecount != tmp){
-        if(tmp - this.framecount >= this.interval){
-        this.framecount = tmp;
-        this.coordSequence.push({
+        //if(Math.abs(tmp-this.framecount) >= this.interval){
+      this.framecount = tmp;
+      this.coordSequence.push({
+        frame : this.framecount,
+        coord : [this.longitude, this.latitude]
+      });
+
+      if(this.mousedown) {
+        this.highLights.push({
           frame : this.framecount,
           coord : [this.longitude, this.latitude]
         });
-        if(this.mousedown) {
-          this.highLights.push({
-            frame : this.framecount,
-            coord : [this.longitude, this.latitude]
-          });
-        }
       }
+      //}
     }
   }
 
@@ -170,15 +171,15 @@ export class VideoComponentComponent implements OnInit, AfterViewInit{
         data => {
           console.log('data', data);
           console.log(document.getElementById('success'));
-          alert("SAVED");
+          alert('SAVED');
+          this.coordSequence = [];
+          this.highLights = [];
         },
         error => {
-          console.log('error');
-          alert("ERROR");
+          console.log(error);
+          alert('ERROR : ' + error);
         }
       );
-      this.coordSequence = [];
-      this.highLights = [];
     }
     else {
       alert("ERROR: Check your name")

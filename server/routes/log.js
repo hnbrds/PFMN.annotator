@@ -4,6 +4,10 @@ var fs = require('fs');
 var router = express.Router();
 
 router.post('/save', function(req, res, next) {
+  if(req.body.log.length == 0){
+    res.status(415).send({msg : "ERR : No log data"});
+    return;
+  }
   writeLog(req.body, function(err) {
     if(err) {
       res.status(500).send({msg : 'Not saved'});
@@ -26,6 +30,7 @@ function writeLog(data, callback) {
   fs.appendFile(path.join(dir +'/' +data.vid+'.json'), JSON.stringify(data)+'\n', {
     mode : 0o777
   }, callback);
+  //fs.appendFileSync(path.join(dir +'/' +data.vid+'.json'), JSON.stringify(data)+'\n');
 }
 
 module.exports = router;
