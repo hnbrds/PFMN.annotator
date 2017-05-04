@@ -9,5 +9,10 @@
     "install": "cd client && npm install && cd ../server && npm install"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@angular/core": "^4.0.2",
+    "d3": "^4.8.0",
+    "d3-ng2-service": "^1.8.0"
+  }
 }

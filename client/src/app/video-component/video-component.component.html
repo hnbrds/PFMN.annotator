@@ -1,5 +1,4 @@
 <div class="containter border-0">
-  <canvas id='draw'></canvas>
   <video class="col-12" id = "vid"
     (mousemove)="onMouse($event)"
     (mousedown)="onMouse($event)"
@@ -7,16 +6,24 @@
     preload='auto' controls>
       <source src="videos/{{vidCategory}}/{{videoId}}" type="video/mp4">
       Your browser does not support the video tag.
-  </video>
-  <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-                id="vid-overlay" width="480px" height="270px">
-    <defs>
-      <mask id="mask1" maskUnits="objectBoundingBox"
-              maskContentUnits="objectBoundingBox">
-          <circle cx="0.25" cy="0.25" r="0.5" fill="white" />
-      </mask>
-    </defs>
-  </svg>
+  </video><!--
+  <svg class='svgoverlay' viewBox="0 0 400 300">
+    <g transform="scale(0.9)">
+        <g class="tooltip mouse" id="overlay">
+            <! The rectangle and text are positioned
+                 to the right and above the <g> element's
+                 0,0 point, purely to help with all the
+                 overlapping tooltips!
+          <rect width="7em" height="2.5em"
+                  [attr.x]="this.pixelX" [attr.y]="this.pixelY"/>
+          <! text x="-3.5em" y="-2.5em" text-anchor="middle">
+            <tspan dy="1em">Mouse-tracking</tspan>
+            <tspan x="-3.5em" dy="1.25em">SVG Tip</tspan>
+          </text>
+        </g>
+    </g>
+</svg>
+  <canvas class="canvas" id="cvoverlay"></canvas> -->
 </div>
 
 <div class="container" id='btn'>
@@ -53,7 +60,6 @@
       (click)='reloadVid()'>Reload Video</button>
     </div>
   </div>
-
 </div>
 
 <div class = 'container' id='log'>

@@ -54,6 +54,14 @@
   padding-top : .5em
 }
 
+/*
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color:rgba(255,0,0,0.1);
+}*/
 .container{
   position:relative; /*<---add this*/
 }
